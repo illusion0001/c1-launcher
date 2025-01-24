@@ -56,6 +56,11 @@ void GameLauncher::LoadEngine()
 	if (m_dlls.isWarhead)
 	{
 		m_dlls.pEXE = LauncherCommon::LoadCrysisWarheadEXE();
+		// try load dll after main `Crysis64.exe` + `CrySystem.dll`
+		if (m_dlls.pEXE)
+		{
+			LoadLibraryA("CrysisWarhead.Patches.asi");
+		}
 	}
 	else
 	{
