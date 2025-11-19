@@ -110,6 +110,7 @@ void LauncherCommon::VerifyGameBuild(int gameBuild)
 {
 	switch (gameBuild)
 	{
+		case 4804: // MP Beta
 		case 5767:
 		case 5879:
 		case 6115:
@@ -380,6 +381,11 @@ void LauncherCommon::OnEarlyEngineInit(ISystem* pSystem, const char* banner)
 	gEnv = pSystem->GetGlobalEnvironment();
 
 	CryLogAlways("%s", banner);
+
+	if (g_isCrysisMP)
+	{
+		return;
+	}
 
 	const std::string mainDir = PathTools::GetWorkingDirectory();
 	const std::string rootDir = PathTools::Prettify(pSystem->GetRootFolder());

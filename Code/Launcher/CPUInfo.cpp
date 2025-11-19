@@ -29,7 +29,7 @@ static unsigned int GetFeatures()
 		features |= CPUInfo::FLAG_MMX;
 	}
 
-	if (g_cpuid.Has3DNow())
+	if (g_cpuid.Has3DNow() && !g_isCrysisMP)
 	{
 		features |= CPUInfo::FLAG_3DNOW;
 	}

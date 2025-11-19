@@ -52,3 +52,5 @@ namespace LauncherCommon
 
 	std::FILE* OpenLogFile(const char* defaultFileName);
 }
+
+extern bool g_isCrysisMP;
