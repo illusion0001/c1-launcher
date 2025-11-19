@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
+# Keep Debug and RelWithDebInfo, dont want other configs
+set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
+
 ################################################################################
 
 project(C1-Launcher VERSION 7 LANGUAGES CXX RC)
@@ -96,43 +99,65 @@ set(GAME_LAUNCHER_MANIFESTS
 
 ################################################################################
 
-add_executable(Crysis WIN32
+set(PROJECT_NAME "Crysis")
+set(OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}")
+
+add_executable(${PROJECT_NAME} WIN32
 	Code/Launcher/Game/Main.cpp
-	Resources/Crysis.rc
+	Resources/${PROJECT_NAME}.rc
 	${GAME_LAUNCHER_MANIFESTS}
 )
 
-target_link_libraries(Crysis GameLauncher)
+target_link_libraries(${PROJECT_NAME} GameLauncher)
+
+set_target_properties(
+    ${PROJECT_NAME}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTPUT_PATH}
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${OUTPUT_PATH}
+)
 
 ################################################################################
 
 # 32-bit Warhead is not supported yet
 if(BUILD_BITS EQUAL 64)
 
+set(PROJECT_NAME "CrysisWarhead")
+set(OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}")
+
 add_executable(CrysisWarheadLauncher WIN32
 	Code/Launcher/Game/Main.cpp
-	Resources/CrysisWarhead.rc
+	Resources/${PROJECT_NAME}.rc
 	${GAME_LAUNCHER_MANIFESTS}
 )
 
 target_link_libraries(CrysisWarheadLauncher GameLauncher)
 
+set_target_properties(
+    ${PROJECT_NAME}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTPUT_PATH}
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${OUTPUT_PATH}
+)
+
 endif()
 
 ################################################################################
+set(PROJECT_NAME "CrysisWars")
+set(OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}")
 
-add_executable(CrysisWars WIN32
+add_executable(${PROJECT_NAME} WIN32
 	Code/Launcher/Game/Main.cpp
-	Resources/CrysisWars.rc
+	Resources/${PROJECT_NAME}.rc
 	${GAME_LAUNCHER_MANIFESTS}
 )
 
-target_link_libraries(CrysisWars GameLauncher)
+target_link_libraries(${PROJECT_NAME} GameLauncher)
 
-set_target_properties(CrysisWars
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES
-		RUNTIME_OUTPUT_NAME Crysis
-		RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/Wars
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTPUT_PATH}
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${OUTPUT_PATH}
 )
 
 ################################################################################
